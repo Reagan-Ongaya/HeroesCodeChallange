@@ -19,7 +19,7 @@ hero2 = Hero.create(name:"Doreen Green",supername:"Squirel Girl")
 
 hero3 = Hero.create(name:"Gwen Stacy",supername:"Spider-Gwen")
 
-hero4 = Hero.create(name:"Diana Prince",supername:"Wonder Woman",)
+hero4 = Hero.create(name:"Diana Prince",supername:"Wonder Woman")
 
 hero5 = Hero.create(name:"Clark Kent",supername:"Superman")
 
