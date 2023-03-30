@@ -1,35 +1,32 @@
 class PowersController < ApplicationController
-      
+rescue_from ActiveRecord::RecordNotFound,with: :unfound_response 
+rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
+
     def index
-        power = Power.all
-        render json: power, except:[:created_at,:updated_at]
+        render json: Power.all,status: :ok
     end
+
     def show
-        power = find_power.as_json(include: { hero: { only: [:id, :name, :super_name] } }, except: [:created_at,:updated_at])
-        render json: power
-    end
-    def create
-      render json: Power.create!(power_params)
-    end
-   def update
-    
-    power = find_power
-    power.update!(power_params)
-
-   end 
-    
-    def destroy
-        power = find_power
-        power.power_hero.destroy_all
-        power.destroy
-        head :no_content
+        power = Power.find(params[:id])
+        render json: power,status: :ok
     end
 
+    def update
+        power = Power.find_by(id: params[:id])
+        power.update!(power_params)
+        render json: power,status: :accepted
+    end
+    
     private
-    def find_power
-       Power.find_by(id: params[:id])
-     end
-     def power_params
-      params.permit(:name, :description)
+
+    def unfound_response
+        render json: {error: "Power not found"},status: :not_found
+    end
+
+    def invalid_record
+        render json:{errors: ["validation errors"]},status: :unprocessable_entity
+    end
+    def power_params
+        params.permit(:description)
     end
 end

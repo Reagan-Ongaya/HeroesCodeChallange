@@ -1,35 +1,25 @@
 class HeroPowersController < ApplicationController
-
-    def index
-        heropowers = HeroPowers.all
-        render json: heropowers, except: [:created_at,:updated_at]
-    end
-
+rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
+rescue_from ActiveRecord::RecordNotFound, with: :invalid_record
     def create
-        heropowers = Heropowers.create!(heropowers_params)
-        if heropowers.valid?
-        render json: heropowers, status: :created
+        heropower = HeroPower.new(heropower_params)
+        hero = Hero.find(heropower.hero_id)
+        power = Power.find(heropower.power_id)
+        if hero && power
+            heropower = HeroPower.create!(heropower_params)
+            render json: hero,serializer: HeroheroSerializer,status: :created
+        else
+            invalid_record
         end
     end
-    def show
-        heropower = find_heropowers
-        render json: heropowers
 
-    end
-    def update
+    private
     
-      hero = find_heropowers
-      hero.update!(heropowers_params)
-  
-     end 
-
-   private
-  
-    def find_heropower
-        Heropower.find_by(id: params[:id])
+    def heropower_params
+       params.permit(:strength, :power_id,:hero_id)
     end
-  
-    def heropowers_params
-      params.permit(:strength, :hero_id, :power_id)
+
+    def invalid_record
+        render json: {errors: ["validation errors"]}, status: :unprocessable_entity
     end
 end
