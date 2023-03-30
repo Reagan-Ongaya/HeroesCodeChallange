@@ -5,10 +5,11 @@ class HeroPowersController < ApplicationController
         render json: heropowers, except: [:created_at,:updated_at]
     end
 
-        def create
+    def create
         heropowers = Heropowers.create!(heropowers_params)
+        if heropowers.valid?
         render json: heropowers, status: :created
-        
+        end
     end
     def show
         heropower = find_heropowers
