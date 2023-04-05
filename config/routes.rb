@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  #Resources for our route
   resources :hero_powers,only:[:create]
   resources :heroes,only:[:show,:index,]
   resources :powers,only:[:show, :index, :update]

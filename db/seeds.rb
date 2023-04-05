@@ -6,11 +6,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 #   Character.create(name: "Luke", movie: movies.first)
-
+#creating database table 
 puts "Seeding database tables"
 
 strength = ["Strong","Weak","Average"]
 
+#create Hero table
 puts "Seeding Hero table"
 
 hero1 = Hero.create(name:"Kamala Khan",supername:"Ms.Marvel")
@@ -32,6 +33,8 @@ hero8 = Hero.create(name:"Arthur Curry",supername:"Aquaman")
 hero9 = Hero.create(name:"Natasha Romanoff",supername:"Black Widow")
 
 hero10 = Hero.create(name:"Perter Parker",supername:"Spider-Man")
+
+#creating table for Power 
 puts "Seeding Power Table"
 
 power1 = Power.create(name:"telekinesis", description:"gives the wielder the ability to move and manipulate objects with their mind")

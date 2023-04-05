@@ -1,6 +1,8 @@
 class HeroPowersController < ApplicationController
 rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
 rescue_from ActiveRecord::RecordNotFound, with: :invalid_record
+
+    #POST / HeroPowers
     def create
         heropower = HeroPower.new(heropower_params)
         hero = Hero.find(heropower.hero_id)
@@ -14,11 +16,13 @@ rescue_from ActiveRecord::RecordNotFound, with: :invalid_record
     end
 
     private
-    
+
+    #Heropowers params
     def heropower_params
        params.permit(:strength, :power_id,:hero_id)
     end
-
+    
+    #Error for invalid records
     def invalid_record
         render json: {errors: ["validation errors"]}, status: :unprocessable_entity
     end
